@@ -1,6 +1,6 @@
 import java.text.DecimalFormat;
 
-public class BeveragePricing {
+public class Order {
     static private Product A =  new Product("A", 0.52F, 0.80F, "%", 0);
     static private Product B =  new Product("B",0.38F, 1.20F,"%", 0.3F);
     static private Product C =  new Product("C",0.41F, 0.9F, "u",0);
@@ -16,9 +16,9 @@ public class BeveragePricing {
 
     private int customer_id;
     private float order_subtotal, order_total;
-    public BeveragePricing(int customer_id,int qty_product_A,
-                           int qty_product_B, int qty_product_C,
-                           int qty_product_D)
+    public Order(int customer_id, int qty_product_A,
+                 int qty_product_B, int qty_product_C,
+                 int qty_product_D)
     {
         this.customer_id = customer_id;
         A.set_qty(qty_product_A);
@@ -30,15 +30,13 @@ public class BeveragePricing {
 
     void  calculate_order_total()
     {
-        int qty_total = 0;
         this.order_subtotal = 0;
         for (Product product : Products)
         {
             this.order_subtotal += product.get_total();
-            qty_total += product.get_qty();
         }
         float basic_discount = this.Customers[customer_id-1].get_basic_discount();
-        this.order_subtotal = this.order_subtotal * (1 - basic_discount);
+        //this.order_subtotal = this.order_subtotal * (1 - basic_discount);
         float bulk_discount = this.Customers[customer_id-1].get_bulk_discount(this.order_subtotal);
         this.order_total = this.order_subtotal * (1 - basic_discount) * (1 - bulk_discount);
 
